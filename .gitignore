@@ -31,4 +31,4 @@ dist-ssr
 Thumbs.db
 
 # Optional: cache
-.eslintcache
+.eslint.config.js

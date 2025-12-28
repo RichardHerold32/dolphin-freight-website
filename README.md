@@ -1,23 +1,36 @@
-<<<<<<< HEAD
-# dolphin-freight-website
-A modern freight logistics website built with React and Tailwind CSS, featuring responsive design, performance-focused UI, and real-world booking workflows.
-=======
-# React + Vite
+# Dolphin Freight Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern freight logistics website built with React and Tailwind CSS.
 
-Currently, two official plugins are available:
+This project is designed as a production-ready frontend for a freight forwarding business, focusing on responsive design, clear user intent, and real-world booking workflows.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## React Compiler
+- React (Vite)
+- Tailwind CSS
+- React Router
+- Modern responsive UI patterns
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Features
 
-Note: This will impact Vite dev & build performances.
+- Full-width responsive hero section
+- Sticky navigation with clean layout behavior
+- Clear separation between Booking and Contact flows
+- Mobile-first design
+- Scalable component structure
 
-## Expanding the ESLint configuration
+## Pages
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
->>>>>>> ec10153 (initial commit setup + navbar and hero section)
+- Home
+-   About
+- Services
+- Booking (Quote Request)
+- Contact
+
+## Purpose
+
+This website is being developed for a real client and is intended to be hosted and used in production.
+
+---
+
+© Dolphin Freight
