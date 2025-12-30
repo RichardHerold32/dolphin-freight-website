@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/Breadcrumbs";
 export default function Contact() {
   return (
     <>
@@ -21,6 +22,9 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      {/* BREADCRUMBS */}
+      <Breadcrumbs />
 
       {/* CONTACT DETAILS */}
       <section className="py-24 bg-white">

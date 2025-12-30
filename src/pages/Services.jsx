@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/Breadcrumbs";
 export default function Services() {
   return (
     <>
@@ -22,6 +23,9 @@ export default function Services() {
           </div>
         </div>
       </section>
+
+      {/* BREADCRUMBS */}
+      <Breadcrumbs />
 
       {/* SERVICES SECTION */}
       <section className="pt-24 pb-24 bg-gray-50">

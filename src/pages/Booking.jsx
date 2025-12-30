@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 export default function Booking() {
   const [form, setForm] = useState({
@@ -46,6 +47,9 @@ export default function Booking() {
           </div>
         </div>
       </section>
+
+      {/* BREADCRUMBS */}
+      <Breadcrumbs />
 
       {/* BOOKING FORM */}
       <section className="py-24 bg-gray-50">

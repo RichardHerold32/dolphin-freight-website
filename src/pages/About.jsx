@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/Breadcrumbs";
 export default function About() {
   return (
     <>
@@ -21,6 +22,9 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* BREADCRUMBS */}
+      <Breadcrumbs />
 
       {/* ABOUT CONTENT */}
       <section className="py-24 bg-white">
