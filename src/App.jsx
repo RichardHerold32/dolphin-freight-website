@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import PageShimmer from "./components/PageShimmer";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -18,6 +19,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 function App() {
   return (
     <>
+    <ScrollToTop />
     <ErrorBoundary>
       <Navbar />
 
