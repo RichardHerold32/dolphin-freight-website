@@ -1,18 +1,25 @@
 import "./App.css";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import Booking from "./pages/Booking";
-import Contact from "./pages/Contact";
+import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PageShimmer from "./components/PageShimmer";
 import NotFound from "./pages/NotFound";
-import { Routes, Route } from "react-router-dom";
+
+// Lazy-loaded pages
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Services = lazy(() => import("./pages/Services"));
+const Booking = lazy(() => import("./pages/Booking"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 function App() {
   return (
     <>
       <Navbar />
+
+      <Suspense fallback={<PageShimmer />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
@@ -21,6 +28,8 @@ function App() {
           <Route path="/booking" element={<Booking />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </Suspense>
+
       <Footer />
     </>
   );
