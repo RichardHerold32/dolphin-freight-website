@@ -7,6 +7,7 @@ export default function Home() {
         <img
           src="cargo_vertical.webp"
           alt="Cargo Ship"
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover object-center md:object-[50%_45%]"
         />
 

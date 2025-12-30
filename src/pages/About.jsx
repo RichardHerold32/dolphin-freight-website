@@ -7,6 +7,7 @@ export default function About() {
         <img
           src="/about-hero.webp"
           alt="About Dolphin Freight"
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/60" />

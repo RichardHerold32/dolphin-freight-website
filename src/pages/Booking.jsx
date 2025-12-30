@@ -31,6 +31,7 @@ export default function Booking() {
         <img
           src="/booking-hero.webp"
           alt="Book Shipment"
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/60" />

@@ -7,6 +7,7 @@ export default function Contact() {
         <img
           src="/contact-hero.webp"
           alt="Contact Dolphin Freight"
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/60" />

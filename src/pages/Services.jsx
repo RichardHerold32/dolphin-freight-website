@@ -7,6 +7,7 @@ export default function Services() {
         <img
           src="/services-hero.webp"
           alt="Freight Services"
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/60" />
@@ -50,6 +51,7 @@ export default function Services() {
               <img
                 src="/air-freight.webp"
                 alt="Air Freight"
+                loading="lazy"
                 className="w-full h-64 object-cover"
               />
               <div className="p-8">
@@ -70,6 +72,7 @@ export default function Services() {
               <img
                 src="/sea-freight.webp"
                 alt="Ocean Freight"
+                loading="lazy"
                 className="w-full h-64 object-cover"
               />
               <div className="p-8">
@@ -90,6 +93,7 @@ export default function Services() {
               <img
                 src="/road-transport.webp"
                 alt="Road Transport"
+                loading="lazy"
                 className="w-full h-64 object-cover"
               />
               <div className="p-8">
@@ -110,6 +114,7 @@ export default function Services() {
               <img
                 src="/warehousing.webp"
                 alt="Warehousing & Distribution"
+                loading="lazy"
                 className="w-full h-64 object-cover"
               />
               <div className="p-8">
