@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageShimmer from "./components/PageShimmer";
 import NotFound from "./pages/NotFound";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -17,6 +18,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 function App() {
   return (
     <>
+    <ErrorBoundary>
       <Navbar />
 
       <Suspense fallback={<PageShimmer />}>
@@ -31,6 +33,7 @@ function App() {
       </Suspense>
 
       <Footer />
+    </ErrorBoundary>
     </>
   );
 }
