@@ -18,11 +18,12 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img
+           <img
             src="/logos/df-crop.png"
             alt="Dolphin Freight"
             className="h-20 w-auto py-2"
-          />
+          />           
+
         </Link>
 
         {/* Mobile Toggle */}
