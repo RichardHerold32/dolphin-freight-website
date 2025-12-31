@@ -12,9 +12,9 @@ export default function Footer() {
           <div>
             <Link to="/">
             <img
-              src="/logos/footer-logo.png"
+              src="/logos/footer.png"
               alt="Dolphin Freight"
-              className="h-10 mb-4"
+              className="h-30 mb-4"
             />
             </Link>
             

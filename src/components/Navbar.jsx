@@ -13,15 +13,15 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full h-20 bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-50 w-full h-22 bg-white border-b border-gray-200">
       <nav className="h-full max-w-7xl flex items-center justify-between mx-auto px-2">
 
         {/* Logo */}
         <Link to="/" className="flex items-center">
            <img
-            src="/logos/df-crop.png"
+            src="/logos/dolphin-freight-SA.png"
             alt="Dolphin Freight"
-            className="h-20 w-auto py-2"
+            className="h-25 w-auto py-2"
           />           
 
         </Link>
