@@ -2,32 +2,42 @@ import { Link } from "react-router-dom";
 
 export default function BookingSuccess() {
   return (
-    <section className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
-      <div className="bg-white border border-gray-200 rounded-xl p-10 max-w-lg text-center shadow-sm">
-        <h1 className="text-3xl font-bold mb-4">
-          Booking Request Sent ✅
+    <section className="min-h-[70vh] flex items-center justify-center bg-gray-50 px-6">
+      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-10 max-w-lg text-center">
+
+        {/* Icon */}
+        <div className="mx-auto mb-6 w-16 h-16 flex items-center justify-center rounded-full bg-green-600 text-white text-2xl">
+          ✓
+        </div>
+
+        {/* Heading */}
+        <h1 className="text-2xl md:text-3xl font-semibold mb-4">
+          Booking Request Submitted
         </h1>
 
-        <p className="text-gray-600 mb-6">
-          Thank you for contacting Dolphin Freight. Our team will review your
-          shipment details and get back to you shortly.
+        {/* Message */}
+        <p className="text-gray-600 mb-8 leading-relaxed">
+          Thank you for choosing Dolphin Freight.  
+          Our logistics team has received your request and will contact you shortly with the next steps.
         </p>
 
-        <div className="flex justify-center gap-4">
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/"
-            className="px-6 py-3 border border-gray-900 rounded-lg font-semibold hover:bg-gray-900 hover:text-white transition"
+            className="px-6 py-3 border border-gray-900 rounded-lg font-semibold text-gray-900 hover:bg-gray-900 hover:text-white transition"
           >
             Back to Home
           </Link>
 
           <Link
             to="/services"
-            className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+            className="px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
           >
             View Services
           </Link>
         </div>
+
       </div>
     </section>
   );
