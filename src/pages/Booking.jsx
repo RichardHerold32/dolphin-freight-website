@@ -55,7 +55,7 @@ async function handleSubmit(e) {
     const formData = new URLSearchParams(form);
 
     const res = await fetch(
-      "https://script.google.com/macros/s/AKfycbyTDsUIaLGVAvPsQGTzsnPa-cejDd617OZwST1egYeWpwiPQ2PhQFck95nvWlTEDA00/exec",
+      "https://script.google.com/macros/s/AKfycbyYvcJABGOzzAwAOJwZujhibLLfGSciw-paoVG83hdZikDajvMllHY41VQi031pvD82/exec",
       {
         method: "POST",
         body: formData,
