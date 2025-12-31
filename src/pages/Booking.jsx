@@ -2,23 +2,23 @@ import { useState } from "react";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useNavigate } from "react-router-dom";
 
+const INITIAL_STATE = {
+  name: "",
+  email: "",
+  phone: "",
+  origin: "",
+  destination: "",
+  serviceType: "",
+  cargoType: "",
+  weight: "",
+  message: "",
+};
+
 export default function Booking() {
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    origin: "",
-    destination: "",
-    serviceType: "",
-    cargoType: "",
-    weight: "",
-    message: "",
-  });
-
+  const [form, setForm] = useState(INITIAL_STATE);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -45,19 +45,40 @@ export default function Booking() {
     return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!validate()) return;
+async function handleSubmit(e) {
+  e.preventDefault();
+  if (!validate()) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    // simulate submission (replace with Google Sheets later)
-    setTimeout(() => {
-      console.log("Booking Request:", form);
-      setLoading(false);
-      navigate("/booking-success");
-    }, 1200);
+  try {
+    const formData = new URLSearchParams(form);
+
+    const res = await fetch(
+      "https://script.google.com/macros/s/AKfycbyTDsUIaLGVAvPsQGTzsnPa-cejDd617OZwST1egYeWpwiPQ2PhQFck95nvWlTEDA00/exec",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!res.ok) throw new Error("Submission failed");
+
+    // reset form (optional but clean)
+    setForm(INITIAL_STATE);
+    setErrors({});
+
+    // ✅ redirect to success page
+    navigate("/booking-success");
+
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
   }
+}
+
 
   return (
     <>
