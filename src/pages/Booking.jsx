@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Breadcrumbs from "../components/Breadcrumbs";
+import { useNavigate } from "react-router-dom";
 
 export default function Booking() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -14,19 +17,51 @@ export default function Booking() {
     message: "",
   });
 
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  function validate() {
+    const newErrors = {};
+
+    if (!form.name.trim()) newErrors.name = "Name is required";
+    if (!form.email.includes("@"))
+      newErrors.email = "Valid email is required";
+    if (!form.phone.trim())
+      newErrors.phone = "Phone number is required";
+    if (!form.serviceType)
+      newErrors.serviceType = "Select a freight service";
+    if (!form.origin.trim())
+      newErrors.origin = "Origin is required";
+    if (!form.destination.trim())
+      newErrors.destination = "Destination is required";
+    if (!form.weight || Number(form.weight) <= 0)
+      newErrors.weight = "Enter a valid weight";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Booking Request:", form);
-    alert("Your booking request has been submitted.");
+    if (!validate()) return;
+
+    setLoading(true);
+
+    // simulate submission (replace with Google Sheets later)
+    setTimeout(() => {
+      console.log("Booking Request:", form);
+      setLoading(false);
+      navigate("/booking-success");
+    }, 1200);
   }
 
   return (
     <>
-      {/* HERO SECTION */}
+      {/* HERO */}
       <section className="relative w-full h-[40vh] overflow-hidden">
         <img
           src="/booking-hero.webp"
@@ -49,10 +84,9 @@ export default function Booking() {
         </div>
       </section>
 
-      {/* BREADCRUMBS */}
       <Breadcrumbs />
 
-      {/* BOOKING FORM */}
+      {/* FORM */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-10">
@@ -63,132 +97,92 @@ export default function Booking() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name & Email */}
               <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={form.name}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
-                  />
-                </div>
+                <FormField
+                  label="Full Name"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  error={errors.name}
+                />
 
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={form.email}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
-                  />
-                </div>
+                <FormField
+                  label="Email Address"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  error={errors.email}
+                />
               </div>
 
               {/* Phone */}
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
-                />
-              </div>
+              <FormField
+                label="Phone Number"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                error={errors.phone}
+              />
 
               {/* Route */}
               <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Origin
-                  </label>
-                  <input
-                    type="text"
-                    name="origin"
-                    value={form.origin}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
-                  />
-                </div>
+                <FormField
+                  label="Origin"
+                  name="origin"
+                  value={form.origin}
+                  onChange={handleChange}
+                  error={errors.origin}
+                />
 
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Destination
-                  </label>
-                  <input
-                    type="text"
-                    name="destination"
-                    value={form.destination}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
-                  />
-                </div>
+                <FormField
+                  label="Destination"
+                  name="destination"
+                  value={form.destination}
+                  onChange={handleChange}
+                  error={errors.destination}
+                />
               </div>
 
-              {/* Service Type & Cargo Type */}
+              {/* Service & Cargo */}
               <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Type of Freight Service
-                  </label>
-                  <select
-                    name="serviceType"
-                    required
-                    value={form.serviceType}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-900"
-                  >
-                    <option value="">Select service</option>
-                    <option>Air Freight</option>
-                    <option>Ocean Freight (FCL)</option>
-                    <option>Ocean Freight (LCL)</option>
-                    <option>Road Transport</option>
-                    <option>Warehousing & Distribution</option>
-                  </select>
-                </div>
+                <SelectField
+                  label="Type of Freight Service"
+                  name="serviceType"
+                  value={form.serviceType}
+                  onChange={handleChange}
+                  error={errors.serviceType}
+                  options={[
+                    "Air Freight",
+                    "Ocean Freight (FCL)",
+                    "Ocean Freight (LCL)",
+                    "Road Transport",
+                    "Warehousing & Distribution",
+                  ]}
+                />
 
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Cargo Type
-                  </label>
-                  <select
-                    name="cargoType"
-                    value={form.cargoType}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gray-900"
-                  >
-                    <option value="">Select cargo type</option>
-                    <option>General Cargo</option>
-                    <option>Perishable</option>
-                    <option>Hazardous</option>
-                    <option>Oversized</option>
-                  </select>
-                </div>
+                <SelectField
+                  label="Cargo Type"
+                  name="cargoType"
+                  value={form.cargoType}
+                  onChange={handleChange}
+                  options={[
+                    "General Cargo",
+                    "Perishable",
+                    "Hazardous",
+                    "Oversized",
+                  ]}
+                />
               </div>
 
               {/* Weight */}
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Estimated Weight (kg)
-                </label>
-                <input
-                  type="number"
-                  name="weight"
-                  value={form.weight}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
-                />
-              </div>
+              <FormField
+                label="Estimated Weight (kg)"
+                name="weight"
+                type="number"
+                value={form.weight}
+                onChange={handleChange}
+                error={errors.weight}
+              />
 
               {/* Message */}
               <div>
@@ -208,19 +202,25 @@ export default function Booking() {
               <div className="pt-6">
                 <button
                   type="submit"
-                  className="
+                  disabled={loading}
+                  className={`
                     px-8 py-3
                     border border-gray-900
                     rounded-lg
                     font-semibold
-                    text-gray-900
+                    flex items-center gap-2
                     transition
-                    hover:bg-gray-900
-                    hover:text-white
-                    active:scale-[0.97]
-                  "
+                    ${
+                      loading
+                        ? "bg-gray-900 text-white cursor-not-allowed"
+                        : "text-gray-900 hover:bg-gray-900 hover:text-white"
+                    }
+                  `}
                 >
-                  Submit Booking Request
+                  {loading && (
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  )}
+                  {loading ? "Submitting..." : "Submit Booking Request"}
                 </button>
               </div>
             </form>
@@ -228,5 +228,46 @@ export default function Booking() {
         </div>
       </section>
     </>
+  );
+}
+
+/* ---------------- Helpers ---------------- */
+
+function FormField({ label, error, ...props }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <input
+        {...props}
+        className={`w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${
+          error
+            ? "border-red-500 focus:ring-red-500"
+            : "border-gray-300 focus:ring-gray-900"
+        }`}
+      />
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+    </div>
+  );
+}
+
+function SelectField({ label, options, error, ...props }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <select
+        {...props}
+        className={`w-full border rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 ${
+          error
+            ? "border-red-500 focus:ring-red-500"
+            : "border-gray-300 focus:ring-gray-900"
+        }`}
+      >
+        <option value="">Select option</option>
+        {options.map((opt) => (
+          <option key={opt}>{opt}</option>
+        ))}
+      </select>
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+    </div>
   );
 }

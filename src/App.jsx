@@ -8,6 +8,8 @@ import PageShimmer from "./components/PageShimmer";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
+import BookingSuccess from "./pages/BookingSuccess";
+
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -31,6 +33,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/booking-success" element={<BookingSuccess />} />
+
         </Routes>
       </Suspense>
 
