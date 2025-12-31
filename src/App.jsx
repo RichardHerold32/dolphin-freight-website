@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import BookingSuccess from "./pages/BookingSuccess";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 
 // Lazy-loaded pages
@@ -39,6 +40,7 @@ function App() {
       </Suspense>
 
       <Footer />
+      <WhatsAppButton />
     </ErrorBoundary>
     </>
   );
