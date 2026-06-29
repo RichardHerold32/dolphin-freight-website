@@ -32,3 +32,6 @@ Thumbs.db
 
 # Optional: cache
 .eslint.config.js
+
+# Deployment documentation
+DEPLOYMENT_INSTRUCTIONS.md
