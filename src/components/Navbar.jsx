@@ -19,8 +19,11 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center">
            <img
-            src="/logos/dolphin-freight-SA.png"
+            src="/logos/dolphin-freight-SA.webp"
             alt="Dolphin Freight"
+            width={360}
+            height={240}
+            decoding="async"
             className="h-25 w-auto py-2"
           />           
 
@@ -56,8 +59,8 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `transition-colors ${
                     isActive
-                      ? "text-gray-900 font-semibold"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "text-blue-600 font-semibold"
+                      : "text-gray-600 hover:text-blue-600"
                   }`
                 }
               >
@@ -80,8 +83,8 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `block px-2 py-2 rounded transition ${
                       isActive
-                        ? "bg-gray-100 text-gray-900 font-semibold"
-                        : "text-gray-700 hover:bg-gray-100"
+                        ? "bg-blue-50 text-blue-600 font-semibold"
+                        : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                     }`
                   }
                 >

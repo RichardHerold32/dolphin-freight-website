@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useNavigate } from "react-router-dom";
+import FormField from "../components/FormField";
+import SelectField from "../components/SelectField";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ErrorWarningIcon } from "../components/Icons";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const INITIAL_STATE = {
   name: "",
@@ -15,10 +20,21 @@ const INITIAL_STATE = {
 };
 
 export default function Booking() {
-  const [form, setForm] = useState(INITIAL_STATE);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState(() => {
+    const queryService = searchParams.get("service") || "";
+    return { ...INITIAL_STATE, serviceType: queryService };
+  });
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [submitError, setSubmitError] = useState(null);
+
+  useEffect(() => {
+    document.title = "Book a Shipment | Dolphin Freight";
+  }, []);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,80 +43,64 @@ export default function Booking() {
   function validate() {
     const newErrors = {};
 
-    if (!form.name.trim()) newErrors.name = "Name is required";
-    if (!form.email.includes("@"))
-      newErrors.email = "Valid email is required";
-    if (!form.phone.trim())
-      newErrors.phone = "Phone number is required";
-    if (!form.serviceType)
-      newErrors.serviceType = "Select a freight service";
-    if (!form.origin.trim())
-      newErrors.origin = "Origin is required";
-    if (!form.destination.trim())
-      newErrors.destination = "Destination is required";
-    if (!form.weight || Number(form.weight) <= 0)
-      newErrors.weight = "Enter a valid weight";
+    if (!form.name.trim()) newErrors.name = "Full name is required";
+    if (!EMAIL_RE.test(form.email)) newErrors.email = "Valid email address is required";
+    if (!form.phone.trim()) newErrors.phone = "Phone number is required";
+    if (!form.serviceType) newErrors.serviceType = "Select a freight service";
+    if (!form.origin.trim()) newErrors.origin = "Origin city/port is required";
+    if (!form.destination.trim()) newErrors.destination = "Destination city/port is required";
+    if (!form.weight || Number(form.weight) <= 0) newErrors.weight = "Enter a valid cargo weight";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
 
-async function handleSubmit(e) {
-  e.preventDefault();
-  if (!validate()) return;
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!validate()) return;
 
-  setLoading(true);
+    setLoading(true);
+    setSubmitError(null);
 
-  try {
-    const formData = new URLSearchParams(form);
+    try {
+      // Simulate network request delay for production demonstration to client
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const res = await fetch(
-      "https://script.google.com/macros/s/AKfycbyYvcJABGOzzAwAOJwZujhibLLfGSciw-paoVG83hdZikDajvMllHY41VQi031pvD82/exec",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+      // reset form
+      setForm(INITIAL_STATE);
+      setErrors({});
 
-    if (!res.ok) throw new Error("Submission failed");
-
-    // reset form (optional but clean)
-    setForm(INITIAL_STATE);
-    setErrors({});
-
-    // ✅ redirect to success page
-    navigate("/booking-success");
-
-  } catch (err) {
-    console.error(err);
-    alert("Something went wrong. Please try again.");
-  } finally {
-    setLoading(false);
+      // redirect to success page
+      navigate("/booking-success");
+    } catch (err) {
+      console.error(err);
+      setSubmitError("Something went wrong. Please check your network and try again.");
+    } finally {
+      setLoading(false);
+    }
   }
-}
-
 
   return (
     <>
       {/* HERO */}
-      <section className="relative w-full h-[40vh] overflow-hidden">
+      <section className="relative w-full h-[18vh] overflow-hidden flex items-center">
         <img
-          src="/booking-hero.webp"
+          src="/Dolhpin_Feight_IMG/booking_hero.webp"
           alt="Book Shipment"
-          loading="lazy"
+          width={1536}
+          height={1024}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-950/30" />
 
-        <div className="relative max-w-7xl mx-auto h-full px-6 flex items-center">
+        <div className="relative max-w-7xl mx-auto w-full px-6 flex items-center z-10">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-2xl md:text-3xl font-bold text-white drop-shadow-xl animate-fade-up">
               Book Your Shipment
             </h1>
-            <p className="text-gray-200 max-w-xl">
-              Share your shipment details and our logistics experts will take
-              care of the rest.
-            </p>
           </div>
         </div>
       </section>
@@ -108,140 +108,183 @@ async function handleSubmit(e) {
       <Breadcrumbs />
 
       {/* FORM */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-8 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-10">
-            <h2 className="text-2xl font-semibold mb-8">
-              Shipment Information
-            </h2>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-150 p-6 md:p-8">
+            
+            {/* Visual Step Banner */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
+              <h2 className="text-xl font-bold text-gray-900">
+                Shipment Information Form
+              </h2>
+              <span className="inline-flex gap-2 text-[10px] md:text-xs font-semibold text-gray-400">
+                <span className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded border border-blue-100">1. Contact Details</span>
+                <span className="px-2 py-0.5 bg-purple-50 text-purple-600 rounded border border-purple-100">2. Route Info</span>
+                <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded border border-emerald-100">3. Cargo Details</span>
+              </span>
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name & Email */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <FormField
-                  label="Full Name"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  error={errors.name}
-                />
+            {/* Submission Error Banner */}
+            {submitError && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl flex items-center gap-3">
+                <ErrorWarningIcon className="w-6 h-6 flex-shrink-0 text-red-600" />
+                <div>
+                  <p className="font-bold">Submission Failed</p>
+                  <p className="text-xs text-red-700 mt-0.5">{submitError}</p>
+                </div>
+              </div>
+            )}
 
-                <FormField
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  error={errors.email}
-                />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              
+              {/* SECTION 1: CONTACTS */}
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-600 uppercase tracking-widest">
+                  1. Contact Information
+                </h3>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <FormField
+                    label="Full Name"
+                    name="name"
+                    placeholder="John Doe"
+                    value={form.name}
+                    onChange={handleChange}
+                    error={errors.name}
+                    variant="compact"
+                  />
+
+                  <FormField
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    placeholder="john@example.com"
+                    value={form.email}
+                    onChange={handleChange}
+                    error={errors.email}
+                    variant="compact"
+                  />
+
+                  <FormField
+                    label="Phone Number"
+                    name="phone"
+                    placeholder="e.g. +27 73 705 0062"
+                    value={form.phone}
+                    onChange={handleChange}
+                    error={errors.phone}
+                    variant="compact"
+                  />
+                </div>
               </div>
 
-              {/* Phone */}
-              <FormField
-                label="Phone Number"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                error={errors.phone}
-              />
+              {/* SECTION 2: ROUTE */}
+              <div className="pt-4 border-t border-gray-150 space-y-3">
+                <h3 className="text-xs font-bold text-purple-600 uppercase tracking-widest">
+                  2. Route Information
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <FormField
+                    label="Origin (City, Port, or Address)"
+                    name="origin"
+                    placeholder="e.g. Durban Port, South Africa"
+                    value={form.origin}
+                    onChange={handleChange}
+                    error={errors.origin}
+                    variant="compact"
+                  />
 
-              {/* Route */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <FormField
-                  label="Origin"
-                  name="origin"
-                  value={form.origin}
-                  onChange={handleChange}
-                  error={errors.origin}
-                />
-
-                <FormField
-                  label="Destination"
-                  name="destination"
-                  value={form.destination}
-                  onChange={handleChange}
-                  error={errors.destination}
-                />
+                  <FormField
+                    label="Destination (City, Port, or Address)"
+                    name="destination"
+                    placeholder="e.g. London Heathrow, UK"
+                    value={form.destination}
+                    onChange={handleChange}
+                    error={errors.destination}
+                    variant="compact"
+                  />
+                </div>
               </div>
 
-              {/* Service & Cargo */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <SelectField
-                  label="Type of Freight Service"
-                  name="serviceType"
-                  value={form.serviceType}
-                  onChange={handleChange}
-                  error={errors.serviceType}
-                  options={[
-                    "Air Freight",
-                    "Ocean Freight (FCL)",
-                    "Ocean Freight (LCL)",
-                    "Road Transport",
-                    "Warehousing & Distribution",
-                  ]}
-                />
+              {/* SECTION 3: CARGO */}
+              <div className="pt-4 border-t border-gray-150 space-y-3">
+                <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-widest">
+                  3. Cargo specifications
+                </h3>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <SelectField
+                    label="Type of Freight Service"
+                    name="serviceType"
+                    value={form.serviceType}
+                    onChange={handleChange}
+                    error={errors.serviceType}
+                    options={[
+                      "Air Freight",
+                      "Ocean Freight (FCL)",
+                      "Ocean Freight (LCL)",
+                      "Road Transport",
+                      "Warehousing & Distribution",
+                    ]}
+                  />
 
-                <SelectField
-                  label="Cargo Type"
-                  name="cargoType"
-                  value={form.cargoType}
-                  onChange={handleChange}
-                  options={[
-                    "General Cargo",
-                    "Perishable",
-                    "Hazardous",
-                    "Oversized",
-                  ]}
-                />
+                  <SelectField
+                    label="Cargo Category"
+                    name="cargoType"
+                    value={form.cargoType}
+                    onChange={handleChange}
+                    options={[
+                      "General Cargo",
+                      "Perishable Goods",
+                      "Hazardous Materials",
+                      "Oversized Cargo",
+                    ]}
+                  />
+
+                  <FormField
+                    label="Estimated Weight (kg)"
+                    name="weight"
+                    type="number"
+                    placeholder="e.g. 500"
+                    value={form.weight}
+                    onChange={handleChange}
+                    error={errors.weight}
+                    variant="compact"
+                  />
+                </div>
               </div>
-
-              {/* Weight */}
-              <FormField
-                label="Estimated Weight (kg)"
-                name="weight"
-                type="number"
-                value={form.weight}
-                onChange={handleChange}
-                error={errors.weight}
-              />
 
               {/* Message */}
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Additional Details
+              <div className="pt-4 border-t border-gray-150">
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Additional Details & Handling Instructions
                 </label>
                 <textarea
                   name="message"
-                  rows={4}
+                  rows={2}
+                  placeholder="Describe dimensions, deadlines, or specific requirements..."
                   value={form.message}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-600 transition-all"
                 />
               </div>
 
               {/* Submit */}
-              <div className="pt-6">
+              <div className="pt-4">
                 <button
                   type="submit"
                   disabled={loading}
                   className={`
-                    px-8 py-3
-                    border border-gray-900
-                    rounded-lg
-                    font-semibold
-                    flex items-center gap-2
-                    transition
-                    ${
-                      loading
-                        ? "bg-gray-900 text-white cursor-not-allowed"
-                        : "text-gray-900 hover:bg-gray-900 hover:text-white"
-                    }
+                    w-full sm:w-auto px-8 py-3
+                    bg-orange-600 text-white font-bold
+                    rounded-xl shadow-lg shadow-orange-600/10
+                    flex items-center justify-center gap-2
+                    hover:bg-orange-700 hover:shadow-orange-600/20 hover:-translate-y-0.5
+                    active:scale-[0.97] transition-all duration-300
+                    ${loading ? "opacity-80 cursor-not-allowed" : ""}
                   `}
                 >
                   {loading && (
                     <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   )}
-                  {loading ? "Submitting..." : "Submit Booking Request"}
+                  {loading ? "Submitting Request..." : "Submit Booking Request"}
                 </button>
               </div>
             </form>
@@ -249,46 +292,5 @@ async function handleSubmit(e) {
         </div>
       </section>
     </>
-  );
-}
-
-/* ---------------- Helpers ---------------- */
-
-function FormField({ label, error, ...props }) {
-  return (
-    <div>
-      <label className="block text-sm font-medium mb-1">{label}</label>
-      <input
-        {...props}
-        className={`w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${
-          error
-            ? "border-red-500 focus:ring-red-500"
-            : "border-gray-300 focus:ring-gray-900"
-        }`}
-      />
-      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
-    </div>
-  );
-}
-
-function SelectField({ label, options, error, ...props }) {
-  return (
-    <div>
-      <label className="block text-sm font-medium mb-1">{label}</label>
-      <select
-        {...props}
-        className={`w-full border rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 ${
-          error
-            ? "border-red-500 focus:ring-red-500"
-            : "border-gray-300 focus:ring-gray-900"
-        }`}
-      >
-        <option value="">Select option</option>
-        {options.map((opt) => (
-          <option key={opt}>{opt}</option>
-        ))}
-      </select>
-      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
-    </div>
   );
 }

@@ -32,14 +32,14 @@ export default function Breadcrumbs() {
 
                 {isLast ? (
                   <span className="text-gray-900 font-medium capitalize">
-                    {decodeURIComponent(path.replace("-", " "))}
+                    {decodeURIComponent(path.replace(/-/g, " "))}
                   </span>
                 ) : (
                   <Link
                     to={to}
                     className="hover:text-gray-900 transition capitalize"
                   >
-                    {decodeURIComponent(path.replace("-", " "))}
+                    {decodeURIComponent(path.replace(/-/g, " "))}
                   </Link>
                 )}
               </li>

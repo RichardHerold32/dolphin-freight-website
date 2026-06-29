@@ -1,5 +1,45 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', var(--font-sans);
+  --spacing-22: 5.5rem;
+  --spacing-25: 6.25rem;
+  --spacing-30: 7.5rem;
+
+  /* Custom maritime navy palette mapped to standard blue utilities */
+  --color-blue-50: #f0f6fc;
+  --color-blue-100: #ddedfa;
+  --color-blue-200: #bddbf5;
+  --color-blue-300: #8ec3ef;
+  --color-blue-400: #56a2e4;
+  --color-blue-500: #3082d4;
+  --color-blue-600: #0f59a4;
+  --color-blue-700: #0d4885;
+  --color-blue-800: #0f3d6c;
+  --color-blue-900: #123459;
+  --color-blue-950: #0b1c2e;
+
+  /* Custom safety orange palette mapped to standard orange utilities */
+  --color-orange-50: #fff7ed;
+  --color-orange-100: #ffedd5;
+  --color-orange-200: #fed7aa;
+  --color-orange-300: #fdba74;
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-orange-600: #c2410c;
+  --color-orange-700: #9a3412;
+  --color-orange-800: #7c2d12;
+  --color-orange-900: #7c2d12;
+  --color-orange-950: #431407;
+}
+
+/* Base typography overrides */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: 0;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -33,4 +73,9 @@
 
 .footer-logo:hover {
   opacity: 1;
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
 } 

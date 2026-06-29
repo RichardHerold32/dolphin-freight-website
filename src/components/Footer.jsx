@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer className="bg-gray-100 border-t border-gray-300">
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-6 py-10">
 
         {/* Top Grid */}
         <div className="grid gap-10 md:grid-cols-4">
@@ -12,9 +12,13 @@ export default function Footer() {
           <div>
             <Link to="/">
             <img
-              src="/logos/footer.png"
+              src="/logos/footer.webp"
               alt="Dolphin Freight"
-              className="h-30 mb-4"
+              width={120}
+              height={80}
+              loading="lazy"
+              decoding="async"
+              className="h-20 mb-3"
             />
             </Link>
             
@@ -23,39 +27,6 @@ export default function Footer() {
               solutions, connecting businesses to global markets with clarity
               and confidence.
             </p>
-
-            {/* Social Icons */}
-            <div className="flex gap-4 mt-6">
-              <a
-                href="#"
-                aria-label="LinkedIn"
-                className="w-9 h-9 flex items-center justify-center rounded-full
-                           border border-gray-300 text-gray-600
-                           hover:text-gray-900 hover:border-gray-400 transition"
-              >
-                <i className="ri-linkedin-fill text-lg" />
-              </a>
-
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="w-9 h-9 flex items-center justify-center rounded-full
-                           border border-gray-300 text-gray-600
-                           hover:text-gray-900 hover:border-gray-400 transition"
-              >
-                <i className="ri-facebook-fill text-lg" />
-              </a>
-
-              <a
-                href="#"
-                aria-label="Twitter"
-                className="w-9 h-9 flex items-center justify-center rounded-full
-                           border border-gray-300 text-gray-600
-                           hover:text-gray-900 hover:border-gray-400 transition"
-              >
-                <i className="ri-twitter-fill text-lg" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -68,44 +39,30 @@ export default function Footer() {
 
           {/* Services */}
           <FooterSection title="Services">
-            <p>Air Freight</p>
-            <p>Ocean Freight</p>
-            <p>Road Transport</p>
-            <p>Warehousing & Distribution</p>
+            <p>Clearing & Forwarding</p>
+            <p>Freight & Logistics</p>
+            <p>Transport & Auto Logistics</p>
           </FooterSection>
 
           {/* Contact */}
           <FooterSection title="Contact">
             <p>
-              Unit 22, Micro Park,<br />
-              26 Crassula Road,<br />
-              Cornubia Industrial, Durban
+              Pelican House,<br />
+              51 Shepstone Street,<br />
+              Durban, 4001
             </p>
             <p>Email: info@dolphinfreight.co.za</p>
-            <p>Tel: 031 015 5616</p>
+            <p>Tel: 031 942 5872</p>
             <p>Cell: 073 705 0062</p>
           </FooterSection>
 
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-300 mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-
-          {/* Legal */}
-          <div className="flex gap-6 text-xs text-gray-600">
-            <a href="#" className="hover:text-gray-900 transition">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-gray-900 transition">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-gray-900 transition">
-              Cookies
-            </a>
-          </div>
+        <div className="border-t border-gray-300 mt-8 pt-4 flex flex-col items-center justify-center">
 
           {/* Copyright */}
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-gray-600 text-center">
             © {new Date().getFullYear()} Dolphin Freight. All rights reserved.
           </p>
         </div>
@@ -121,9 +78,9 @@ function FooterSection({ title, children }) {
     <>
       {/* Desktop */}
       <div className="hidden md:block">
-        <h4 className="text-gray-900 font-semibold mb-4">
+        <p className="text-gray-900 font-semibold mb-4">
           {title}
-        </h4>
+        </p>
         <div className="space-y-3 text-sm text-gray-700">
           {children}
         </div>

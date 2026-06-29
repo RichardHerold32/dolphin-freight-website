@@ -2,12 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/src/index.css" rel="stylesheet" >
-    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 
-    <title>dolphin-freight</title>
+    <!-- SEO Meta -->
+    <meta name="description" content="Dolphin Freight offers reliable air, sea, and road freight logistics solutions from Durban, South Africa. Get a free quote for customs clearance, freight forwarding, and transport services." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Dolphin Freight | Global Freight & Logistics Solutions" />
+    <meta property="og:description" content="Reliable air, sea, and road logistics from Durban, South Africa. Customs clearance, freight forwarding, and transport services." />
+    <meta property="og:image" content="https://dolphinfreight.co.za/logos/dolphin-freight-SA.webp" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com; connect-src 'self' https://api.web3forms.com;" />
+
+    <!-- Preload LCP hero images responsively -->
+    <link rel="preload" as="image" href="/Dolhpin_Feight_IMG/homepage_hero_mobile.webp" type="image/webp" media="(max-width: 768px)" />
+    <link rel="preload" as="image" href="/Dolhpin_Feight_IMG/homepage_hero.webp" type="image/webp" media="(min-width: 769px)" />
+
+    <!-- Fonts (non-render-blocking) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" /></noscript>
+
+    <title>Dolphin Freight | Global Freight & Logistics Solutions</title>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Dolphin Freight",
+      "description": "Global freight and logistics solutions from Durban, South Africa",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "51 Shepstone Street, Pelican House",
+        "addressLocality": "Durban",
+        "postalCode": "4001",
+        "addressCountry": "ZA"
+      },
+      "telephone": "+27319425872",
+      "email": "info@dolphinfreight.co.za",
+      "url": "https://dolphinfreight.co.za"
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
